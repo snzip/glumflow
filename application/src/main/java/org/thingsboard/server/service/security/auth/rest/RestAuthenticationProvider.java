@@ -39,7 +39,7 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
         this.customerService = customerService;
         this.encoder = encoder;
     }
-
+//TODO mike add permission
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         Assert.notNull(authentication, "No authentication data provided");

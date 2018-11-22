@@ -36,6 +36,7 @@ import org.thingsboard.server.common.msg.TbMsgMetaData;
 import org.thingsboard.server.common.msg.cluster.SendToClusterMsg;
 import org.thingsboard.server.common.msg.system.ServiceToRuleEngineMsg;
 import org.thingsboard.server.dao.alarm.AlarmService;
+import org.thingsboard.server.dao.app.AppService;
 import org.thingsboard.server.dao.asset.AssetService;
 import org.thingsboard.server.dao.attributes.AttributesService;
 import org.thingsboard.server.dao.audit.AuditLogService;
@@ -91,6 +92,10 @@ public abstract class BaseController {
 
     @Autowired
     protected DeviceService deviceService;
+
+
+    @Autowired
+    protected AppService appService;
 
     @Autowired
     protected AssetService assetService;
@@ -677,5 +682,23 @@ public abstract class BaseController {
         return result;
     }
 
+
+
+    App checkAppId(AppId appId) throws ThingsboardException {
+        try {
+            validateId(appId, "Incorrect deviceId " + appId);
+            App app = appService.findAppById(appId);
+            checkApp(app);
+            return app;
+        } catch (Exception e) {
+            throw handleException(e, false);
+        }
+    }
+
+    protected void checkApp(App app) throws ThingsboardException {
+        checkNotNull(app);
+        checkTenantId(app.getTenantId());
+//        checkCustomerId(app.getCustomerId());
+    }
 
 }

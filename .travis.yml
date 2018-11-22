@@ -7,3 +7,8 @@ jdk:
 language: java
 sudo: required
 script: mvn clean verify
+
+# safelist
+branches:
+  only:
+  - mymaster

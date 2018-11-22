@@ -31,6 +31,10 @@ public class SecurityUser extends User {
         this.userPrincipal = userPrincipal;
     }
 
+    /**
+     * TODO songzipeng add acl
+     * @return
+     */
     public Collection<GrantedAuthority> getAuthorities() {
         if (authorities == null) {
             authorities = Stream.of(SecurityUser.this.getAuthority())
