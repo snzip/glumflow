@@ -47,6 +47,7 @@ import org.thingsboard.server.dao.device.DeviceService;
 import org.thingsboard.server.dao.entityview.EntityViewService;
 import org.thingsboard.server.dao.exception.DataValidationException;
 import org.thingsboard.server.dao.exception.IncorrectParameterException;
+import org.thingsboard.server.dao.mod.ModService;
 import org.thingsboard.server.dao.model.ModelConstants;
 import org.thingsboard.server.dao.relation.RelationService;
 import org.thingsboard.server.dao.rule.RuleChainService;
@@ -58,6 +59,7 @@ import org.thingsboard.server.exception.ThingsboardErrorResponseHandler;
 import org.thingsboard.server.service.component.ComponentDiscoveryService;
 import org.thingsboard.server.service.security.model.SecurityUser;
 import org.thingsboard.server.service.state.DeviceStateService;
+import org.thingsboard.server.service.state.ModStateService;
 import org.thingsboard.server.service.telemetry.TelemetrySubscriptionService;
 
 import javax.mail.MessagingException;
@@ -92,6 +94,9 @@ public abstract class BaseController {
 
     @Autowired
     protected DeviceService deviceService;
+
+    @Autowired
+    protected ModService modService;
 
 
     @Autowired
@@ -132,6 +137,11 @@ public abstract class BaseController {
 
     @Autowired
     protected DeviceStateService deviceStateService;
+
+    @Autowired
+    protected ModStateService modStateService;
+
+
 
     @Autowired
     protected EntityViewService entityViewService;
@@ -341,11 +351,31 @@ public abstract class BaseController {
         }
     }
 
+    protected void checkMod(Mod mod) throws ThingsboardException {
+        checkNotNull(mod);
+        checkTenantId(mod.getTenantId());
+        checkCustomerId(mod.getCustomerId());
+    }
+
+
+    Mod checkModId(ModId modId) throws ThingsboardException {
+        try {
+            validateId(modId, "Incorrect deviceId " + modId);
+            Mod mod = modService.findModById(modId);
+            checkMod(mod);
+            return mod;
+        } catch (Exception e) {
+            throw handleException(e, false);
+        }
+    }
+
     protected void checkDevice(Device device) throws ThingsboardException {
         checkNotNull(device);
         checkTenantId(device.getTenantId());
         checkCustomerId(device.getCustomerId());
     }
+
+
 
     protected EntityView checkEntityViewId(EntityViewId entityViewId) throws ThingsboardException {
         try {

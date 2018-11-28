@@ -32,6 +32,7 @@ import org.thingsboard.server.dao.device.DeviceCredentialsService;
 import org.thingsboard.server.dao.device.DeviceService;
 import org.thingsboard.server.dao.entityview.EntityViewService;
 import org.thingsboard.server.dao.event.EventService;
+import org.thingsboard.server.dao.mod.ModService;
 import org.thingsboard.server.dao.relation.RelationService;
 import org.thingsboard.server.dao.rule.RuleChainService;
 import org.thingsboard.server.dao.settings.AdminSettingsService;
@@ -70,6 +71,9 @@ public abstract class AbstractServiceTest {
 
     @Autowired
     protected DeviceService deviceService;
+
+    @Autowired
+    protected ModService  modService;
 
     @Autowired
     protected AssetService assetService;

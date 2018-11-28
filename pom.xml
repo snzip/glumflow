@@ -72,9 +72,9 @@
         <module>netty-mqtt</module>
         <module>common</module>
         <module>rule-engine</module>
-        <module>dao</module> 
+        <module>dao</module>
         <module>tools</module>
-        <module>application</module> 
+        <module>application</module>
     </modules>
 
     <profiles>
@@ -291,6 +291,7 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
+                <version>1.16</version>
             </plugin>
         </plugins>
     </build>
